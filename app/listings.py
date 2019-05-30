@@ -1,4 +1,4 @@
-from db.listings import Listing
+from db.listings import Listings
 
 from flask import (
     Blueprint, flash, redirect, render_template, request, url_for

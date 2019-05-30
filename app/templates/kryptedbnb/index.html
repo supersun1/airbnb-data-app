@@ -5,24 +5,22 @@
 {% endblock %}
 
 {% block content %}
+    <div>
+        <form action="{{url_for('kryptedbnb.search')}}" method="POST">
+            <input type="date" name="desired_date">
+            <input type="submit" name="search" value="Search">
+        </form>
+    </div>
   {% for listing in listings %}
-    <article class="book">
+    <article class="listings">
       <header>
         <div>
-          <h1>{{listing['name']}}</h1>
-            <div>
-                Price: {{ listing['price']}} per night <br>
-            </div>
-            <div>
-                <img src={{listing['picture_url']}}>
-            </div>
-            <div>
-                <form action="{{url_for('bookstore.add_to_cart')}}" method="POST">
-                    Copies:
-                    <input type="number" name="copies" size="10" maxlength="2">
-                    <input type="submit" name="add_to_cart" value="Add to Cart">
-                </form>
-            </div>
+            <h4>{{listing[0]['name']}}</h4>
+            <h1>Price: {{ listing[0]['price']}} per night</h1>
+            <h1>First Available Date: {{ listing[1]}}</h1>
+                <div>
+                    <img src={{listing[0]['picture_url']}} height="300" width="500">
+                </div>
         </div>
       </header>
     </article>

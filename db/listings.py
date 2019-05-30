@@ -1,9 +1,8 @@
 from mongoengine import*
 from db.reviews import Reviews
 
-class Listing(Document):
-    id = StringField(required=True, max_length=200)
-
+class Listings(Document):
+    listing_id = StringField(required=True, max_length=200)
     listing_url = StringField(required=True, max_length=200)
     scrape_id = StringField(required=True, max_length=200)
     last_scraped = BooleanField(required=True, default= False)
@@ -100,3 +99,4 @@ class Listing(Document):
     require_guest_phone_verification = BooleanField(required=False, default=False)
     calculated_host_listings_count = IntField(required=False)
     reviews_per_month = IntField(required=False)
+    first_available_date=DateField(required=False)
