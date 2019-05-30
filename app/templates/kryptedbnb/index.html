@@ -7,26 +7,49 @@
 {% block content %}
     <div>
         <form action="{{url_for('kryptedbnb.search')}}" method="POST">
-            <input type="date" name="desired_date">
+            Checkin Date:
+            <input type="date" name="checkin_date" value="Checkin Date">
+            <br>
+            How many nights:
+            <input type="number" name="desired_nights" value="Planned Nights">
+            <br>
+            Sort By:
+            <select name="sort_by">
+                <option value="low_to_high">Low to High</option>
+                <option value="high_to_low">High to Low</option>
+            </select>
+            <br><br>
+
             <input type="submit" name="search" value="Search">
         </form>
     </div>
-  {% for listing in listings %}
-    <article class="listings">
-      <header>
-        <div>
-            <h4>{{listing[0]['name']}}</h4>
-            <h1>Price: {{ listing[0]['price']}} per night</h1>
-            <h1>First Available Date: {{ listing[1]}}</h1>
-                <div>
-                    <img src={{listing[0]['picture_url']}} height="300" width="500">
-                </div>
-        </div>
-      </header>
-    </article>
-    {% if not loop.last %}
-      <hr>
+    {% if listings == [] %}
+        <article class="listings">
+         <header>
+            <div>
+                <h1>We do not have availability within your requirements</h1>
+            </div>
+         </header>
+        </article>
+    {% else %}
+
+      {% for listing in listings %}
+        <article class="listings">
+          <header>
+            <div>
+                <h4>{{listing[0]['name']}}</h4>
+                <h1>Price: {{ listing[0]['price']}} per night</h1>
+                <h1>First Available Date: {{ listing[1]}}</h1>
+                    <div>
+                        <img src={{listing[0]['picture_url']}} height="300" width="500">
+                    </div>
+            </div>
+          </header>
+        </article>
+        {% if not loop.last %}
+          <hr>
+        {% endif %}
+      {% endfor %}
     {% endif %}
-  {% endfor %}
 
 {% endblock %}
