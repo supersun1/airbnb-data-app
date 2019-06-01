@@ -9,7 +9,7 @@ class Listings(Document):
     name = StringField(required=True, max_length=200)
     summary = StringField(required=False)
     space = IntField(required=True)
-    description = StringField(required=True, max_length=600)
+    description = StringField(required=True)
     experiences_offered = StringField(required=False)
     neighborhood_overview = StringField(required=False)
     notes = StringField(required=False, max_length=600)

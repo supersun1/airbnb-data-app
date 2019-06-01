@@ -149,3 +149,13 @@ input[type=submit] {
     display: inline;
     vertical-align: middle;
 }
+
+.img-avatar {
+  border-radius: 50%;
+}
+
+.detail-title{
+  color:#FF6347;
+  font-weight: bold;
+
+}

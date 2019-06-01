@@ -41,7 +41,7 @@
                 <h1>Price: {{ listing[0]['price']}} per night</h1>
                 <h1>First Available Date: {{ listing[1]}}</h1>
                     <div>
-                        <img src={{listing[0]['picture_url']}} height="300" width="500">
+                        <img src={{listing[0]['picture_url']}} style="width:500px;height:300px;">
                     </div>
             </div>
             <div class="button-container">
@@ -50,7 +50,7 @@
                     <input type="hidden" name="listing_id" value="{{ listing[0]['listing_id']}}">
                     <input type="hidden" name="nights" value="{{ listing[2]}}">
                 </form>
-                <form action="{{ url_for('kryptedbnb.more_info')}}" method="GET">
+                <form action="{{ url_for('kryptedbnb.more_info')}}" method="POST">
                     <input type="submit" name="more_info" value="More Info">
                     <input type="hidden" name="listing_id" value="{{ listing[0]['listing_id']}}">
                 </form>

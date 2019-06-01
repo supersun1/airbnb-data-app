@@ -1,20 +1,47 @@
 {% extends 'base.html' %}
 
-{% block header %}
-  <h1>{% block title %}{% endblock %}</h1>
-{% endblock %}
+
 {% block content %}
 
-    {% if listing == () %}
+
+    {% if listing[2] == "exist" %}
         <article class="listings">
          <header>
             <div>
-                <h1></h1>
+                <h1>Welcome to {{ listing[0]['name']}}</h1>
+                <h4>Hosted by {{ listing[0]['host_name'] }}
+                    <avatar>
+                        <img class="img-avatar" src="{{ listing[0]['host_thumbnail_url'] }}">
+                    </avatar>
+                </h4>
+                {% if listing[0]['summary'] != ""%}
+                    <h1>Listing description: </h1>
+                    <p>{{ listing[0]['summary'] }}</p>
+            {% endif %}
+
             </div>
          </header>
+         <body>
+            <img src={{listing[0]['picture_url']}} height="300" width="500"> <br>
+
+
+
+
+
+
+            <div class="detail-title">
+                {% if listing[0]['description'] != ""%}
+                    <h1>Detailed description: </h1>
+                    <p>{{ listing[0]['description'] }}</p>
+            {% endif %}
+
+            </div>
+         </body>
+
+
         </article>
     {% else %}
-        <div>it exissts {{ listing }}
+        <div>it doesn't exist {{ listing }}
 
         </div>
 

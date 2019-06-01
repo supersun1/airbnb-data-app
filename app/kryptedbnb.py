@@ -3,6 +3,7 @@ from db.booking import Booking
 from db.listings import Listings
 # from app.auth import login_required
 from datetime import datetime, timedelta
+import time
 import random
 
 from flask import (
@@ -33,7 +34,7 @@ def search():
     available_listing = []
     checkin_date = request.form.get('checkin_date')
     desired_nights = request.form.get('desired_nights')
-    if desired_nights is "" :
+    if desired_nights is "":
         desired_nights = 1
     else:
         desired_nights = int(desired_nights)
@@ -73,36 +74,43 @@ def search():
 
 @bp.route('/books', methods=['POST'])
 def books():
-    available_listing = []
-    listing_id = request.form.get('listing_id')
-    nights = request.form.get('nights')
+    print("booking")
+#     available_listing = []
+#     listing_id = request.form.get('listing_id')
+#     nights = request.form.get('nights')
+#
+#     print("booked listing: " + listing_id + " for " + nights + " nights")
+#
+#
+#
+#     return render_template('kryptedbnb/index.html', listings=available_listing)
 
-    print("booked listing: " + listing_id + " for " + nights + " nights")
 
 
 
-    return render_template('kryptedbnb/index.html', listings=available_listing)
-
-
-
-
-@bp.route('/moreInfo', methods=['GET'])
+@bp.route('/moreInfo', methods=['GET', 'POST'])
 def more_info():
     dates = []
-    # room_id = request.form.get('listing_id')
-    room_id = "9835"
-    print(room_id)
-    listing = Listings.objects().get(listing_id=room_id)
+    available_listing = []
+    room_id = request.form.get('listing_id')
+    room_id = int(room_id)
+    listing = Listings.objects(listing_id=room_id).get()
+
     print(listing)
     available_dates = Calendar.objects(listing_id=room_id).all()
 
     for date in available_dates:
-        if date.avilable == "t":
+        if date.available == "t":
             dates.append(date.date)
+        if len(available_dates) > 2:
+            break
 
-    available_listing = (listing, dates)
+    # dates.append("2019-08-08")
 
-    return render_template('kryptedbnb/moreinfo.html', listing=available_listing)
+    listing_tuple = (listing, dates, "exist")
+    print(listing['name'])
+    available_listing.append(listing_tuple)
+    return render_template('kryptedbnb/moreinfo.html', listing=listing_tuple)
 
 
 
@@ -112,19 +120,27 @@ def more_info():
 
 def get_listings():
     random_available_listing = []
+    seen = []
+    random.seed(int(time.time()))
     listings = Listings.objects().all()
     cur_date = datetime.now().strftime("%Y-%m-%d")
+    calendar_listings = Calendar.objects(available="t").all()
 
-    for listing in listings:
-        calendar_listings = Calendar.objects(listing_id=listing.listing_id).all()
-        for cal_list in calendar_listings:
+    for cal_list in calendar_listings:
+        number_gen = random.randint(1, 101)
+        if number_gen % 2:
+            if cal_list.listing_id in seen:
+                continue
+            seen.append(cal_list.listing_id)
+
             if cal_list.date > cur_date:
+                listing = Listings.objects(listing_id=cal_list.listing_id).get()
                 listing_tuple = (listing, cal_list.date, 1)
                 random_available_listing.append(listing_tuple)
 
-                break;
-        if len(random_available_listing) > 10:
-            break;
+            if len(random_available_listing) > 9:
+                break
+
     return random_available_listing
 
 def sort_by_price(listings, sort_type):
@@ -134,11 +150,3 @@ def sort_by_price(listings, sort_type):
     else:
         sorted(listings, key=lambda listing: (listing[0]).price)
         return listings
-
-
-#
-# def create_order(copies, isbn):
-#     book = Book.objects(isbn=isbn).get()
-#     customer = Customer.objects(first_name="Kennth").get()
-#
-
