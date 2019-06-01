@@ -32,7 +32,11 @@ def index():
 def search():
     available_listing = []
     checkin_date = request.form.get('checkin_date')
-    desired_nights = int(request.form.get('desired_nights'))
+    desired_nights = request.form.get('desired_nights')
+    if desired_nights is "" :
+        desired_nights = 1
+    else:
+        desired_nights = int(desired_nights)
     sort_status = request.form.get("sort_by")
     calendar_listings = Calendar.objects(date=checkin_date).all()
 
@@ -55,8 +59,7 @@ def search():
 
                 if should_add:
                     listing = Listings.objects(listing_id=cal_list.listing_id).get()
-                    listing_tuple = (listing, cal_list.date)
-                    print(listing.listing_id)
+                    listing_tuple = (listing, cal_list.date, desired_nights)
                     available_listing.append(listing_tuple)
 
         if len(available_listing) > 9:
@@ -65,7 +68,47 @@ def search():
 
     available_listing = sort_by_price(available_listing, sort_status)
 
+
     return render_template('kryptedbnb/index.html', listings=available_listing)
+
+@bp.route('/books', methods=['POST'])
+def books():
+    available_listing = []
+    listing_id = request.form.get('listing_id')
+    nights = request.form.get('nights')
+
+    print("booked listing: " + listing_id + " for " + nights + " nights")
+
+
+
+    return render_template('kryptedbnb/index.html', listings=available_listing)
+
+
+
+
+@bp.route('/moreInfo', methods=['GET'])
+def more_info():
+    dates = []
+    # room_id = request.form.get('listing_id')
+    room_id = "9835"
+    print(room_id)
+    listing = Listings.objects().get(listing_id=room_id)
+    print(listing)
+    available_dates = Calendar.objects(listing_id=room_id).all()
+
+    for date in available_dates:
+        if date.avilable == "t":
+            dates.append(date.date)
+
+    available_listing = (listing, dates)
+
+    return render_template('kryptedbnb/moreinfo.html', listing=available_listing)
+
+
+
+
+
+
 
 def get_listings():
     random_available_listing = []
@@ -76,7 +119,7 @@ def get_listings():
         calendar_listings = Calendar.objects(listing_id=listing.listing_id).all()
         for cal_list in calendar_listings:
             if cal_list.date > cur_date:
-                listing_tuple = (listing, cal_list.date)
+                listing_tuple = (listing, cal_list.date, 1)
                 random_available_listing.append(listing_tuple)
 
                 break;

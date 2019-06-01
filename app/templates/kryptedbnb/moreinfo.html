@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+
+    {% if listing == () %}
+        <article class="listings">
+         <header>
+            <div>
+                <h1></h1>
+            </div>
+         </header>
+        </article>
+    {% else %}
+        <div>it exissts {{ listing }}
+
+        </div>
+
+    {% endif %}
+{% endblock %}
