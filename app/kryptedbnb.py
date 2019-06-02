@@ -1,6 +1,6 @@
-from kryptedbnb.calendar import Calendar
-from kryptedbnb.booking import Booking
-from kryptebnb.listings import Listings
+from db.calendar import Calendar
+from db.booking import Booking
+from db.listings import Listings
 # from app.auth import login_required
 from datetime import datetime, timedelta
 import time
