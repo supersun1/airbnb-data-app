@@ -1,7 +1,7 @@
 from db.calendar import Calendar
 from db.booking import Booking
 from db.listings import Listings
-# from app.auth import login_required
+from app.auth import login_required
 from datetime import datetime, timedelta
 import time
 import random
@@ -73,6 +73,7 @@ def search():
     return render_template('kryptedbnb/index.html', listings=available_listing)
 
 @bp.route('/books', methods=['POST'])
+@login_required
 def books():
     print("booking")
 #     available_listing = []
