@@ -1,6 +1,6 @@
-from db.calendar import Calendar
-from db.booking import Booking
-from db.listings import Listings
+from db.calendar import calendar
+from db.booking import booking
+from db.listings import listings
 # from app.auth import login_required
 from datetime import datetime, timedelta
 import time
