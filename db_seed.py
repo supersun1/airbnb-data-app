@@ -21,7 +21,7 @@ def mongo_db_seed(db_name):
         Listings(
             listing_id=random.randint(8741,34875),
             name=fake.sentence(nb_words=3, variable_nb_words=True, ext_word_list=None),
-            price=random.random*100,
+            price=str(random.random() * 100),
         ).save()
 
     for listing in Listings.objects:
@@ -29,7 +29,7 @@ def mongo_db_seed(db_name):
             listing_id = listing.listing_id,
             date = "2019-09-09",
             available="t",
-            price=random.random*100,
+            price=str(random.random() * 100),
         ).save()
 
     for x in range(3):
