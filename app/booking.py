@@ -11,6 +11,10 @@ from flask import (
 
 bp = Blueprint('booking', __name__, url_prefix='/booking')
 
+@bp.route('/')
+def index():
+    booking = Booking.objects
+    return booking.to_json()
 
 @bp.route('/books', methods=['GET','POST'])
 @login_required

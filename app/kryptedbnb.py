@@ -22,14 +22,6 @@ def index():
 
     return render_template('kryptedbnb/index.html', listings=available_listing)
 
-
-# @bp.route('/checkoutoption', methods=['POST'])
-# def at_checkout():
-#     if request.form['submit_btn'] == 'Keep Browsing':
-#         return redirect(url_for('bookstore.index'))
-#     elif request.form['submit_btn'] == 'Checkout':
-#         return redirect(url_for('order.create'))
-
 @bp.route('/search', methods=['POST'])
 def search():
     available_listing = []
