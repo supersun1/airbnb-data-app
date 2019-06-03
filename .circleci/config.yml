@@ -1,0 +1,37 @@
+version: 2 # use CircleCI 2.0
+jobs: # A basic unit of work in a run
+  build: # runs not using Workflows must have a `build` job as entry point
+    # directory where steps are run
+    working_directory: ~/circleci-python-mongodb
+    docker: # run the steps with Docker
+      - image: continuumio/miniconda3
+        environment: # environment variables for primary container
+          DATABASE_URL: mongodb://localhost:27017
+          # PYTHONPATH: /root/circleci-python-mongodb
+      - image: circleci/mongo:4.0.3
+    steps: # steps that comprise the `build` job
+      - checkout # check out source code to working directory
+      - restore_cache:
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          key: deps9-{{ checksum "environment.yml" }}
+      - run:
+          name: "Check if conda env list contains CMPE272. If so, cache is restored. Else create env"
+          command: |
+            echo 'export TEMP=$(conda env list | grep CMPE272)' >> $BASH_ENV
+            source $BASH_ENV
+      - run:
+          command: |
+            echo $TEMP
+            if [[ $TEMP != *"CMPE272"* ]]; then conda env create environment.yml; fi
+      - run:
+          command: |
+            echo ". /opt/conda/etc/profile.d/conda.sh" >> $BASH_ENV
+            echo "conda activate CMPE272" >> $BASH_ENV
+      - save_cache: # cache Python dependencies using checksum of Pipfile as the cache-key
+          key: deps9-{{ checksum "environment.yml" }}
+          paths:
+            - "/opt/conda/bin/conda"
+            - "/opt/conda/envs/CMPE272"
+      - run:
+          command: |
+            python -m pytest -s
