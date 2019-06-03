@@ -1,5 +1,6 @@
 from db.calendar import Calendar
 from db.booking import Booking
+from db.reviews import Reviews
 from db.listings import Listings
 # from app.auth import login_required
 from datetime import datetime, timedelta
@@ -72,19 +73,6 @@ def search():
 
     return render_template('kryptedbnb/index.html', listings=available_listing)
 
-@bp.route('/books', methods=['POST'])
-def books():
-    print("booking")
-#     available_listing = []
-#     listing_id = request.form.get('listing_id')
-#     nights = request.form.get('nights')
-#
-#     print("booked listing: " + listing_id + " for " + nights + " nights")
-#
-#
-#
-#     return render_template('kryptedbnb/index.html', listings=available_listing)
-
 
 
 
@@ -108,8 +96,10 @@ def more_info():
     # dates.append("2019-08-08")
 
     listing_tuple = (listing, dates, "exist")
-    print(listing['name'])
     available_listing.append(listing_tuple)
+
+
+
     return render_template('kryptedbnb/moreinfo.html', listing=listing_tuple)
 
 
@@ -133,7 +123,7 @@ def get_listings():
                 continue
             seen.append(cal_list.listing_id)
 
-            if cal_list.date > cur_date:
+            if cal_list.date > str(cur_date):
                 listing = Listings.objects(listing_id=cal_list.listing_id).get()
                 listing_tuple = (listing, cal_list.date, 1)
                 random_available_listing.append(listing_tuple)

@@ -35,12 +35,14 @@ def create_app(test_config=None):
     def hello():
         return 'Hello, World!'
 
-    from . import kryptedbnb, booking, calendar, listings, reviews
+    from . import kryptedbnb, booking, calendar, listings, reviews, auth, customer
     app.register_blueprint(booking.bp)
     app.register_blueprint(calendar.bp)
     app.register_blueprint(listings.bp)
     app.register_blueprint(reviews.bp)
     app.register_blueprint(kryptedbnb.bp)
+    app.register_blueprint(customer.bp)
+    app.register_blueprint(auth.bp)
 
 
     db.init_app(app)

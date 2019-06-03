@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <article class="book">
+        <h2>Your bookings</h2>
+            <div>
+                <h2>Booking Id: {{ book[0]['id'] }}</h2>
+                <h2>You've booked {{ book[0]['name'] }} for {{ book[1] }} nights</h2>
+                <div>Total Price: {{ book[0]['total_price'] }} <br> Order Status: {{ book[0]['order_status'] }}</div>
+
+            </div>
+    </article>
+{% endblock %}
