@@ -3,7 +3,6 @@ import datetime
 
 from db.calendar import Calendar
 from db.booking import Booking
-from db.reviews import Reviews
 from db.listings import Listings
 from db.customer import Customer
 

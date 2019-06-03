@@ -19,7 +19,7 @@ def mongo_db_seed(db_name):
 
     for x in range(10):
         Listings(
-            listing_id=random.randint(8741,34875),
+            listing_id=str(random.randint(8741,34875)),
             name=fake.sentence(nb_words=3, variable_nb_words=True, ext_word_list=None),
             price=str(random.random() * 100),
         ).save()
