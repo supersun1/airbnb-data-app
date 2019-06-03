@@ -1,22 +1,29 @@
 import pytest
 import datetime
 
-from db.book import Book
+from db.booking import Booking
+from db.calendar import Calendar
+from db.listings import Listings
 from db.customer import Customer
-from db.inventory import Inventory
-from db.order import Order
+# from db.inventory import Inventory
+# from db.order import Order
 from mongoengine.errors import ValidationError
 
 
 def test_entry_counts(app):
-    book_count = Book.objects.count()
+    book_count = Booking.objects.count()
     assert book_count == 10
-    inventory_count = Inventory.objects.count()
-    assert inventory_count == 10
+    # inventory_count = Inventory.objects.count()
+    # assert inventory_count == 10
     customer_count = Customer.objects.count()
     assert customer_count == 10
-    order_count = Order.objects.count()
-    assert order_count >= 10
+    # order_count = Order.objects.count()
+    # assert order_count >= 10
+    calendar_count = Calendar.objects.count()
+    assert calendar_count == 10
+    listing_count = Listings.objects.count()
+    assert listing_count == 10
+
 
 
 def test_valid_data_entry(app):
@@ -68,10 +75,11 @@ def test_valid_data_entry(app):
 
 
 def test_invalid_data_entry(app):
-    invalid_book = Book(
+    invalid_book = Booking(
         price="123",
         published=datetime.datetime.utcnow(),
         publisher="Test company"
+        
     )
     with pytest.raises(ValidationError):
         invalid_book.save()
