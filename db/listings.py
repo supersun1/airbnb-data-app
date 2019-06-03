@@ -3,7 +3,7 @@ from db.reviews import Reviews
 
 class Listings(Document):
     listing_id = StringField(required=True, max_length=200)
-    listing_url = StringField(required=True, max_length=200)
+    listing_url = StringField(required=False, max_length=200)
     scrape_id = StringField(required=False, max_length=200)
     last_scraped = BooleanField(required=False, default= False)
     name = StringField(required=False, max_length=200)
@@ -94,7 +94,7 @@ class Listings(Document):
     jurisdiction_names = StringField(required=False)
     instant_bookable = BooleanField(required=False)
     is_business_travel_ready = BooleanField(required=False)
-    cancellation_policy = StringField(required=True, max_length=200)
+    cancellation_policy = StringField(required=False, max_length=200)
     require_guest_profile_picture = BooleanField(required=False, default=False)
     require_guest_phone_verification = BooleanField(required=False, default=False)
     calculated_host_listings_count = IntField(required=False)
