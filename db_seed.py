@@ -21,7 +21,7 @@ def mongo_db_seed(db_name):
         Listings(
             listing_id=random.randint(8741,34875),
             name=fake.sentence(nb_words=3, variable_nb_words=True, ext_word_list=None),
-            price=round(random.uniform(0, 100), 2),
+            price=random.randint(50,300),
         ).save()
 
     for listing in Listings.objects:
