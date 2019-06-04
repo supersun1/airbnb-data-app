@@ -5,8 +5,8 @@ import datetime
 
 
 bp = make_github_blueprint(
-    client_id="client_id",
-    client_secret="client_secret",
+    client_id="7f887c3a3ea0ee2780d2",
+    client_secret="dd7076b4b77e025f5c8278a13adf2f55b55272fa",
     redirect_url='http://localhost:5000/login'
 )
 

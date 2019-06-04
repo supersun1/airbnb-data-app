@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{% endblock %}</h1>
+{% endblock %}
 {% block content %}
     <article class="book">
-        <h2>Your bookings</h2>
-            <div>
-                <h2>Booking Id: {{ book[0]['id'] }}</h2>
-                <h2>You've booked {{ book[0]['name'] }} for {{ book[1] }} nights</h2>
-                <div>Total Price: {{ book[0]['total_price'] }} <br> Order Status: {{ book[0]['order_status'] }}</div>
 
-            </div>
+        {% if listing != "" %}
+            <h2>Your Booking</h2>
+            {% for order in orders %}
+            <div>
+                <h2>Order Id: {{ order['id'] }}</h2>
+                <div>Total Price: {{ order['total_price'] }} <br> Order Status: {{ order['order_status'] }}</div>
+             </div>
+            {% endfor %}
+        {%  else %}
+            <h2>You don't have any bookings yet. Go book some and explore</h2>
+
+        {% endif %}
     </article>
 {% endblock %}
