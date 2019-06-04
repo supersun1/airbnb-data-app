@@ -15,3 +15,4 @@ dependencies:
     - pytest
     - coverage
     - flask-mongoengine
+    - Flask-Dance
